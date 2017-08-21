@@ -9,7 +9,9 @@ gem 'puma'
 gem 'rails', '5.0.5'
 gem 'redis'
 gem 'omniauth-facebook'
-# gem 'geocoder'
+gem 'geocoder'
+gem "cloudinary"
+gem "letter_opener", group: :development
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'

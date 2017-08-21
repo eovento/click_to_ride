@@ -4,6 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook]
 
+  after_create :send_welcome_email
+
+  geocoded_by :location
+  after_validation :geocode, if: :location_changed?
+
   def self.find_for_facebook_oauth(auth)
     user_params = auth.slice(:provider, :uid)
     user_params.merge! auth.info.slice(:email, :first_name, :last_name)
@@ -24,4 +29,15 @@ class User < ApplicationRecord
 
     return user
   end
-end
+
+  def user_avatar
+    self.facebook_picture_url || "http://via.placeholder.com/50x50"
+  end
+
+  private
+
+  def send_welcome_email
+    UserMailer.welcome(self).deliver_now
+  end
+  
+end   
