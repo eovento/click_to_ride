@@ -12,6 +12,7 @@ gem 'omniauth-facebook'
 gem 'geocoder'
 gem "cloudinary"
 gem "letter_opener", group: :development
+gem "carrierwave"
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
