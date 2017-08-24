@@ -9,6 +9,10 @@ class User < ApplicationRecord
   geocoded_by :location
   after_validation :geocode, if: :location_changed?
 
+  has_attachment :avatar
+
+  has_many :cars
+
   def self.find_for_facebook_oauth(auth)
     user_params = auth.slice(:provider, :uid)
     user_params.merge! auth.info.slice(:email, :first_name, :last_name)
@@ -31,7 +35,7 @@ class User < ApplicationRecord
   end
 
   def user_avatar
-    self.facebook_picture_url || "http://via.placeholder.com/50x50"
+    self.facebook_picture_url || self.avatar || "http://via.placeholder.com/50x50"
   end
 
   private
